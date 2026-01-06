@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div th:replace="fragments/header :: body"></div>
+
+<main class="max-w-6xl mx-auto mt-12 px-4">
+
+    <div class="card bg-gray-50 shadow-xl border border-gray-200">
+        <div class="card-body">
+
+            <h2 class="text-2xl font-bold text-red-700 mb-6">
+                🏆 Leaderboard
+            </h2>
+
+            <div class="overflow-x-auto rounded-xl border border-gray-200">
+                <table class="table w-full">
+                    <thead class="bg-red-700 text-white">
+                    <tr>
+                        <th class="text-lg font-semibold">Rank</th>
+                        <th class="text-lg font-semibold">Name</th>
+                        <th class="text-lg font-semibold">Score</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="entry, iterStat : ${leaderboard}"
+                        th:class="${iterStat.even}? 'bg-white' : 'bg-gray-50'"
+                        class="hover:bg-red-50 transition">
+
+                        <td class="font-bold text-gray-900 text-lg" th:text="${iterStat.index + 1}"></td>
+                        <td class="text-gray-800 text-lg" th:text="${entry.playerName}"></td>
+                        <td class="text-gray-700 text-lg" th:text="${entry.score}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

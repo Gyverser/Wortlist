@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div th:replace="fragments/header :: body"></div>
+
+<main class="max-w-6xl mx-auto mt-12 px-4">
+
+    <div class="card bg-gray-50 shadow-xl border border-gray-200">
+        <div class="card-body">
+
+            <div class="quiz-status">
+                <div id="score">Score: 0</div>
+                <div id="lives">❤️❤️❤️</div>
+            </div>
+
+            <h2 id="quizWord" class="text-4xl font-bold text-red-700 mb-6 text-center">Word</h2>
+
+            <div id="options" class="options"></div>
+
+            <div class="button-container">
+                <button id="nextBtn" class="next-btn hidden">Next Question</button>
+            </div>
+
+            <div id="gameOver" class="hidden mt-4 text-center">
+                <h2 id="gameOverText" class="text-3xl font-bold text-red-700 mb-4 flex items-center justify-center gap-2">
+                    Game Over! <span class="text-2xl">🇩🇪</span>
+                </h2>
+                <div class="flex justify-center items-center gap-2">
+                    <input id="playerName" type="text" placeholder="Your Name" class="input-themed">
+                    <button id="submitScore" class="next-btn">Submit Score</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<script src="/js/quiz.js"></script>
+</body>
+</html>

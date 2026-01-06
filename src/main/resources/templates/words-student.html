@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Words</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<div th:replace="fragments/header :: body"></div>
+
+<div class="max-w-6xl mx-auto mt-4 px-4">
+    <div class="flex justify-end mb-4">
+        <div sec:authorize="isAuthenticated()" class="flex items-center gap-3">
+            <span class="text-gray-700">Logged in as: <span sec:authtype="name"></span><span sec:authorize="hasRole('STUDENT')" class="text-blue-600 font-semibold">Student</span></span>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-sm btn-outline border-red-700 text-red-700">
+                    🔒 Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto mt-12 px-4">
+
+    <div class="card bg-gray-50 shadow-xl border border-gray-200">
+        <div class="card-body">
+
+            <h2 class="text-2xl font-bold text-red-700 mb-6">
+                📘 Word List
+            </h2>
+
+            <div sec:authorize="isAuthenticated()">
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="table w-full">
+                        <thead class="bg-red-700 text-white">
+                        <tr>
+                            <th class="text-lg font-semibold">Word</th>
+                            <th class="text-lg font-semibold">Meaning</th>
+                            <th class="text-lg font-semibold">Sentence</th>
+                            <th class="text-lg font-semibold">Level</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="word, iterStat : ${words.content}"
+                            th:class="${iterStat.even}? 'bg-white' : 'bg-gray-50'"
+                            class="hover:bg-red-50 transition">
+
+                            <td class="font-bold text-gray-900 text-lg" th:text="${word.word}"></td>
+                            <td class="text-gray-800 text-lg" th:text="${word.meaning}"></td>
+                            <td class="text-gray-700 text-lg" th:text="${word.sentence}"></td>
+
+                            <td>
+                                <span class="badge badge-outline badge-sm text-red-600 px-3"
+                                      th:text="${word.level}">
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex justify-between items-center mt-6">
+
+                    <div class="flex items-center gap-3">
+                        <a class="btn btn-outline btn-sm"
+                           th:classappend="${words.first} ? 'btn-disabled'"
+                           th:href="@{/words(page=${words.number - 1})}">
+                            «
+                        </a>
+
+                        <span class="btn btn-sm bg-red-700 text-white px-4">
+                            Page <span th:text="${words.number + 1}"></span>
+                        </span>
+
+                        <a class="btn btn-outline btn-sm"
+                           th:classappend="${words.last} ? 'btn-disabled'"
+                           th:href="@{/words(page=${words.number + 1})}">
+                            »
+                        </a>
+                    </div>
+
+                    <div>
+                        <span class="text-gray-600 italic">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>
