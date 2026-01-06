@@ -1,6 +1,7 @@
 HELP.md
 DEPLOY.md
 README.md
+Procfile
 system.properties
 Dockerfile
 .env
